@@ -1,5 +1,4 @@
-﻿// Data/TaskContext.cs
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TaskApi.Models;
 
 namespace TaskApi.Data
@@ -12,7 +11,9 @@ namespace TaskApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Specifying that TaskItem entities will be stored in a container named "Tasks" in DB.
             modelBuilder.Entity<TaskItem>().ToContainer("Tasks");
+
             modelBuilder.Entity<TaskItem>().HasKey(t => t.Id);
             modelBuilder.Entity<TaskItem>().Property(t => t.Id).ToJsonProperty("id");
             modelBuilder.Entity<TaskItem>().Property(t => t.Title).ToJsonProperty("title");

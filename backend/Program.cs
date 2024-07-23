@@ -1,4 +1,3 @@
-// Program.cs
 using Microsoft.EntityFrameworkCore;
 using TaskApi.Data;
 using Microsoft.Azure.Cosmos;
@@ -19,13 +18,13 @@ builder.Services.AddDbContext<TaskContext>(options =>
     );
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Initialize Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Ensure the database and container are created
+// Ensure the database and container are created (to make sure the DB is synced with the model)
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<TaskContext>();

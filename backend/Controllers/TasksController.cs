@@ -1,5 +1,4 @@
-﻿// Controllers/TasksController.cs
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskApi.Data;
 using TaskApi.Models;
@@ -43,11 +42,11 @@ namespace TaskApi.Controllers
         public async Task<ActionResult<TaskItem>> PostTask(CreateTaskDto createTaskDto)
         {
             var taskItem = new TaskItem
-            {
-                Id = Guid.NewGuid().ToString(),  // Generate a new UUID
+            {   
+                Id = Guid.NewGuid().ToString(),
                 Title = createTaskDto.Title,
                 Description = createTaskDto.Description,
-                Completed = false  // Ensure default value for Completed
+                Completed = false
             };
 
             _context.Tasks.Add(taskItem);
@@ -58,12 +57,17 @@ namespace TaskApi.Controllers
 
         // PUT: api/tasks/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(string id, TaskItem taskItem)
+        public async Task<IActionResult> PutTask(string id, UpdateTaskDto updateTaskDto)
         {
-            if (id != taskItem.Id)
+            var taskItem = await _context.Tasks.FindAsync(id);
+            if (taskItem == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            taskItem.Title = updateTaskDto.Title;
+            taskItem.Description = updateTaskDto.Description;
+            taskItem.Completed = updateTaskDto.Completed;
 
             _context.Entry(taskItem).State = EntityState.Modified;
 
