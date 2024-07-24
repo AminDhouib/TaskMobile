@@ -61,7 +61,6 @@ export function EditTaskScreen({ navigation, route }: Props) {
                         style={styles.input}
                         placeholder="Task title"
                         keyboardAppearance="dark"
-                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setName}
@@ -71,7 +70,6 @@ export function EditTaskScreen({ navigation, route }: Props) {
                         style={styles.input}
                         placeholder="Description"
                         keyboardAppearance="dark"
-                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setDescription}

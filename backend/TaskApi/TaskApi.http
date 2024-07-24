@@ -1,6 +1,39 @@
 @TaskApi_HostAddress = http://localhost:5239
 
-GET {{TaskApi_HostAddress}}/weatherforecast/
+# Get all tasks
+GET {{TaskApi_HostAddress}}/api/tasks
 Accept: application/json
 
 ###
+
+# Get a specific task by ID
+GET {{TaskApi_HostAddress}}/api/tasks/{taskId}
+Accept: application/json
+
+###
+
+# Create a new task
+POST {{TaskApi_HostAddress}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "New Task",
+  "description": "New Task Description"
+}
+
+###
+
+# Update an existing task by ID
+PUT {{TaskApi_HostAddress}}/api/tasks/{taskId}
+Content-Type: application/json
+
+{
+  "title": "Updated Task",
+  "description": "Updated Task Description",
+  "completed": true
+}
+
+###
+
+# Delete a task by ID
+DELETE {{TaskApi_HostAddress}}/api/tasks/{taskId}

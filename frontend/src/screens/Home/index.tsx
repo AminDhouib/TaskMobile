@@ -41,7 +41,6 @@ export function Home({ navigation }: Props) {
     const [taskDoneCounter, setTaskDoneCounter] = useState(0)
     const getData = async () => {
         const response = await getTasks()
-        console.log('done')
         setTasks(response)
         setTaskCounter(response.length)
         setTaskDoneCounter(response.filter(item => item.completed).length)
@@ -122,7 +121,6 @@ export function Home({ navigation }: Props) {
                         style={styles.input}
                         placeholder="Task title"
                         keyboardAppearance="dark"
-                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setTask}
@@ -132,7 +130,6 @@ export function Home({ navigation }: Props) {
                         style={styles.input}
                         placeholder="Description"
                         keyboardAppearance="dark"
-                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setDescription}

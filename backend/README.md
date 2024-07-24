@@ -14,7 +14,6 @@ Before you begin, ensure you have the following installed on your machine:
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Azure Cosmos DB Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator) (or an actual Cosmos DB account using Azure)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/)
-- [Git](https://git-scm.com/downloads)
 
 ## Setup Instructions
 

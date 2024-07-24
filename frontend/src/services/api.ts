@@ -1,6 +1,7 @@
 import { TaskItem } from '../screens/Home'
+import config from './../../config.json'
 
-const API_URL = 'https://taskmapi.azurewebsites.net/api'
+const API_URL = config.API_URL
 
 export const getTasks = async (): Promise<TaskItem[]> => {
     const response = await fetch(`${API_URL}/tasks`)
@@ -31,7 +32,6 @@ export const updateTask = async (
     title: string,
     description: string
 ): Promise<boolean> => {
-    console.log('updateTask', id, completed, title, description)
     const response = await fetch(`${API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: {
@@ -41,6 +41,7 @@ export const updateTask = async (
     })
     return response.status === 204
 }
+
 export const updateTaskStatus = async (
     id: string,
     completed: boolean
