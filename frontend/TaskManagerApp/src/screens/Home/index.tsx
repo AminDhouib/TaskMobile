@@ -17,6 +17,7 @@ import {Info} from '../../components/Info';
 import {styles} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {addTask, deleteTask, getTasks} from '../../services/api';
+import {useFocusEffect} from '@react-navigation/native';
 
 export type TaskItem = {
   id: string;
@@ -40,16 +41,22 @@ export function Home({navigation}: Props) {
   const [description, setDescription] = useState('');
   const [taskCounter, setTaskCounter] = useState(0);
   const [taskDoneCounter, setTaskDoneCounter] = useState(0);
+  const getData = async () => {
+    const response = await getTasks();
+    console.log('done');
+    setTasks(response);
+    setTaskCounter(response.length);
+    setTaskDoneCounter(response.filter(item => item.completed).length);
+  };
   useEffect(() => {
-    const getData = async () => {
-      const response = await getTasks();
-      console.log('done');
-      setTasks(response);
-      setTaskCounter(response.length);
-      setTaskDoneCounter(response.filter(item => item.completed).length);
-    };
     getData();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, []),
+  );
   async function handleTaskAdd(): Promise<void> {
     if (tasks.some(item => item.title === task)) {
       return Alert.alert('Error', 'Task already exists');
@@ -66,9 +73,10 @@ export function Home({navigation}: Props) {
       completed: false,
     };
     const res = await addTask(taskObject);
-    setTasks(prevState => [...prevState, res]);
+    setTasks(prevState => [res, ...prevState]);
     setTaskCounter(prevState => prevState + 1);
     setTask('');
+    setDescription('');
   }
   function handleOpenDetails(task: TaskItem): void {
     if (task) {

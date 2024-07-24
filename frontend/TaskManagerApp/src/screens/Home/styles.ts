@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
   containerColBigger: {
     flexDirection: 'column',
     width: '100%',
-    height: 300,
+    height: 270,
   },
   smallLnput: {
     backgroundColor: '#262626',

@@ -30,20 +30,21 @@ export const updateTask = async (
   completed: boolean,
   title: string,
   description: string,
-): Promise<TaskItem> => {
+): Promise<boolean> => {
+  console.log('updateTask', id, completed, title, description);
   const response = await fetch(`${API_URL}/tasks/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({title, completed, description}),
+    body: JSON.stringify({title, description, completed}),
   });
-  return response.json();
+  return response.status === 204;
 };
 export const updateTaskStatus = async (
   id: string,
   completed: boolean,
-): Promise<TaskItem> => {
+): Promise<boolean> => {
   const response = await fetch(`${API_URL}/tasks/${id}`, {
     method: 'PUT',
     headers: {
@@ -51,7 +52,7 @@ export const updateTaskStatus = async (
     },
     body: JSON.stringify({completed}),
   });
-  return response.json();
+  return response.status === 204;
 };
 
 export const deleteTask = async (id: string): Promise<void> => {

@@ -42,7 +42,7 @@ export function EditTaskScreen({navigation, route}: Props) {
       }
       await updateTask(task.id, isChecked, name, description);
       Alert.alert('Success', 'Task updated successfully');
-      navigation?.goBack();
+      navigation?.navigate('Home');
     } catch (error) {
       Alert.alert('Error', 'Failed to update task');
       console.error(error);
