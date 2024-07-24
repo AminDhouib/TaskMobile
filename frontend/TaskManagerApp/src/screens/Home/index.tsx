@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
-
 import {
   Alert,
   Image,
@@ -16,19 +15,41 @@ import {Header} from '../../components/Header';
 import {AntDesign} from '@expo/vector-icons';
 import {Info} from '../../components/Info';
 import {styles} from './styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {addTask, deleteTask, getTasks} from '../../services/api';
 
 export type TaskItem = {
   id: string;
   name: string;
   completed: boolean;
 };
-export function Home() {
+type RootStackParamList = {
+  Home: undefined;
+  EditTask: {task: TaskItem};
+};
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+export function Home({navigation}: Props) {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [task, setTask] = useState('');
   const [taskCounter, setTaskCounter] = useState(0);
   const [taskDoneCounter, setTaskDoneCounter] = useState(0);
-
-  function handleTaskAdd(): void {
+  useEffect(() => {
+    const getData = async () => {
+      console.log('get data');
+      const response = await getTasks();
+      console.log('done');
+      setTasks(response);
+      setTaskCounter(response.length);
+      setTaskDoneCounter(response.filter(item => item.completed).length);
+    };
+    getData();
+  }, []);
+  async function handleTaskAdd(): Promise<void> {
     if (tasks.some(item => item.name === task)) {
       return Alert.alert('Error', 'Task already exists');
     }
@@ -41,15 +62,20 @@ export function Home() {
       name: task,
       completed: false,
     };
-    setTasks(prevState => [...prevState, taskObject]);
+    const res = await addTask(taskObject);
+    setTasks(prevState => [...prevState, res]);
     setTaskCounter(prevState => prevState + 1);
     setTask('');
   }
-
-  function handleTaskRemove(name: string): void {
+  function handleOpenDetails(task: TaskItem): void {
+    if (task) {
+      navigation.navigate('EditTask', {task});
+    }
+  }
+  function handleTaskRemove(item: TaskItem): void {
     Alert.alert(
       'Warning',
-      `Are you sure you want to remove the task ${name}?`,
+      `Are you sure you want to remove the task ${item.name}?`,
       [
         {
           text: 'No',
@@ -58,8 +84,9 @@ export function Home() {
         {
           text: 'Yes',
           onPress: () => {
-            setTasks(prevState => prevState.filter(item => item.name !== name));
+            setTasks(prevState => prevState.filter(it => it.id !== item.id));
             setTaskCounter(prevState => prevState - 1);
+            deleteTask(item.id);
           },
         },
       ],
@@ -81,7 +108,7 @@ export function Home() {
       <View style={styles.form}>
         <TextInput
           style={styles.input}
-          placeholder="Adicione uma nova tarefa"
+          placeholder="Add a new task"
           keyboardAppearance="dark"
           autoCapitalize="words"
           keyboardType="default"
@@ -105,7 +132,8 @@ export function Home() {
             key={item.name}
             name={item}
             onCheckPressed={value => handleTaskDoneCounter(value)}
-            onRemove={() => handleTaskRemove(item.name)}
+            onEdit={() => handleOpenDetails(item)}
+            onRemove={() => handleTaskRemove(item)}
           />
         )}
         showsVerticalScrollIndicator={false}

@@ -38,6 +38,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 42,
     marginTop: 36,
+    gap: 16,
+  },
+  secondForm: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 16,
   },
   input: {
     backgroundColor: '#262626',
@@ -49,5 +55,49 @@ export const styles = StyleSheet.create({
     marginRight: 12,
     marginTop: 16,
     padding: 16,
+  },
+  smallLnput: {
+    backgroundColor: '#262626',
+    borderRadius: 5,
+    color: '#FFF',
+    flex: 1,
+    fontSize: 16,
+    maxHeight: 84,
+    marginRight: 12,
+    marginTop: 16,
+    padding: 16,
+    justifyContent: 'center',
+  },
+  checkboxContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 16,
+  },
+  checkboxLabel: {
+    color: '#808080',
+    fontSize: 16,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 16,
+  },
+  checkbox: {
+    alignSelf: 'center',
+    borderRadius: 999,
+    borderColor: '#4EA8DE',
+    marginLeft: 16,
+  },
+  taskDone: {
+    color: '#808080',
+    flex: 1,
+    fontSize: 16,
+    marginLeft: 16,
+    textDecorationLine: 'line-through',
+  },
+  taskAdd: {
+    color: '#FFFFFF',
+    flex: 1,
+    fontSize: 16,
+    marginLeft: 16,
   },
 });

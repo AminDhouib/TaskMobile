@@ -20,21 +20,35 @@ export const addTask = async (
   return response.json();
 };
 
-export const getTaskById = async (id: number): Promise<TaskItem> => {
-  const response = await fetch(`${API_URL}/tasks/${id}`);
+export const getTaskById = async (id: string): Promise<TaskItem> => {
+  const response = await fetch(`${API_URL}/Tasks/${id}`);
   return response.json();
 };
 
-export const updateTaskStatus = async (
-  id: number,
+export const updateTask = async (
+  id: string,
   completed: boolean,
-): Promise<TaskItem> => {
-  const response = await fetch(`${API_URL}/tasks/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({completed}),
+  name: string,
+): Promise<TaskItem | null> => {
+  try {
+    console.log(`${API_URL}/Tasks/${id}`);
+    const response = await fetch(`${API_URL}/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name, completed}),
+    });
+    console.log(response.status);
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const deleteTask = async (id: string): Promise<void> => {
+  await fetch(`${API_URL}/Tasks/${id}`, {
+    method: 'DELETE',
   });
-  return response.json();
 };
