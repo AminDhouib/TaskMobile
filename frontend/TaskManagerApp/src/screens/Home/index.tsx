@@ -21,6 +21,7 @@ import {addTask, deleteTask, getTasks} from '../../services/api';
 export type TaskItem = {
   id: string;
   title: string;
+  description: string;
   completed: boolean;
 };
 type RootStackParamList = {
@@ -36,11 +37,11 @@ type Props = {
 export function Home({navigation}: Props) {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [task, setTask] = useState('');
+  const [description, setDescription] = useState('');
   const [taskCounter, setTaskCounter] = useState(0);
   const [taskDoneCounter, setTaskDoneCounter] = useState(0);
   useEffect(() => {
     const getData = async () => {
-      console.log('get data');
       const response = await getTasks();
       console.log('done');
       setTasks(response);
@@ -53,13 +54,15 @@ export function Home({navigation}: Props) {
     if (tasks.some(item => item.title === task)) {
       return Alert.alert('Error', 'Task already exists');
     }
-    if (task.trim() === '') {
+    if (task.trim() === '' || description.trim() === '') {
       setTask('');
-      return Alert.alert('Error', 'Task name cannot be empty');
+      setDescription('');
+      return Alert.alert('Error', 'Task name and description cannot be empty');
     }
     const taskObject: TaskItem = {
       id: '',
       title: task,
+      description: description,
       completed: false,
     };
     const res = await addTask(taskObject);
@@ -104,22 +107,32 @@ export function Home({navigation}: Props) {
   return (
     <View style={styles.container}>
       <Header />
-
       <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Add a new task"
-          keyboardAppearance="dark"
-          autoCapitalize="words"
-          keyboardType="default"
-          placeholderTextColor={'#808080'}
-          onChangeText={setTask}
-          value={task}
-        />
-
-        <TouchableOpacity style={styles.button} onPress={handleTaskAdd}>
-          <AntDesign name="pluscircleo" size={20} color={'#FFF'} />
-        </TouchableOpacity>
+        <View style={styles.containerCol}>
+          <TextInput
+            style={styles.input}
+            placeholder="Task title"
+            keyboardAppearance="dark"
+            autoCapitalize="words"
+            keyboardType="default"
+            placeholderTextColor={'#808080'}
+            onChangeText={setTask}
+            value={task}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Description"
+            keyboardAppearance="dark"
+            autoCapitalize="words"
+            keyboardType="default"
+            placeholderTextColor={'#808080'}
+            onChangeText={setDescription}
+            value={description}
+          />
+          <TouchableOpacity style={styles.button} onPress={handleTaskAdd}>
+            <Text style={styles.buttonText}>Add Task</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Info taskCounter={taskCounter} taskDoneCounter={taskDoneCounter} />

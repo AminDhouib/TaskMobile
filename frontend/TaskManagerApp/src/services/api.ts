@@ -29,22 +29,29 @@ export const updateTask = async (
   id: string,
   completed: boolean,
   title: string,
-): Promise<TaskItem | null> => {
-  try {
-    console.log(`${API_URL}/Tasks/${id}`);
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({title, completed}),
-    });
-    console.log(response.status);
-    return response.json();
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+  description: string,
+): Promise<TaskItem> => {
+  const response = await fetch(`${API_URL}/tasks/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({title, completed, description}),
+  });
+  return response.json();
+};
+export const updateTaskStatus = async (
+  id: string,
+  completed: boolean,
+): Promise<TaskItem> => {
+  const response = await fetch(`${API_URL}/tasks/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({completed}),
+  });
+  return response.json();
 };
 
 export const deleteTask = async (id: string): Promise<void> => {

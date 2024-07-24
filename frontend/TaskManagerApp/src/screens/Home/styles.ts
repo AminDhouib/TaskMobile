@@ -6,10 +6,12 @@ export const styles = StyleSheet.create({
     backgroundColor: '#1E6F9F',
     borderRadius: 5,
     flexDirection: 'row',
-    height: 52,
+    height: 48,
     justifyContent: 'center',
-    marginTop: 16,
-    width: 52,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: 15,
+    width: '100%',
   },
   container: {
     backgroundColor: '#000000',
@@ -34,6 +36,12 @@ export const styles = StyleSheet.create({
     marginTop: 56,
     width: 56,
   },
+  mainTitle: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
   form: {
     flexDirection: 'row',
     marginBottom: 42,
@@ -52,9 +60,18 @@ export const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     height: 54,
-    marginRight: 12,
     marginTop: 16,
     padding: 16,
+  },
+  containerCol: {
+    flexDirection: 'column',
+    width: '100%',
+    height: 200,
+  },
+  containerColBigger: {
+    flexDirection: 'column',
+    width: '100%',
+    height: 300,
   },
   smallLnput: {
     backgroundColor: '#262626',

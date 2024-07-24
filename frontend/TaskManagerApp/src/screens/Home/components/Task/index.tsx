@@ -5,6 +5,7 @@ import {styles} from './styles';
 
 import Checkbox from 'expo-checkbox';
 import {TaskItem} from '../../index';
+import {updateTaskStatus} from '../../../../services/api';
 
 type Props = {
   item: TaskItem;
@@ -24,18 +25,23 @@ export function Task({item, onRemove, onCheckPressed, onEdit}: Props) {
           onValueChange={(value: any) => {
             if (value) {
               setChecked(true);
+              updateTaskStatus(item.id, true);
               onCheckPressed(true);
             } else {
               setChecked(false);
+              updateTaskStatus(item.id, false);
               onCheckPressed(false);
             }
           }}
         />
-        {isChecked ? (
-          <Text style={styles.taskDone}>{item.title}</Text>
-        ) : (
-          <Text style={styles.taskAdd}>{item.title}</Text>
-        )}
+        <View style={styles.containerCol}>
+          {isChecked ? (
+            <Text style={styles.taskDone}>{item.title}</Text>
+          ) : (
+            <Text style={styles.taskAdd}>{item.title}</Text>
+          )}
+          <Text style={styles.description}>{item.description}</Text>
+        </View>
         <View style={styles.actionButtonsContainer}>
           <TouchableOpacity style={styles.button} onPress={onEdit}>
             <AntDesign name="edit" size={24} color={'#808080'} />

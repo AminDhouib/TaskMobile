@@ -28,15 +28,19 @@ type Props = {
 export function EditTaskScreen({navigation, route}: Props) {
   // @ts-ignore
   const {task} = route?.params;
-  const [name, setName] = useState(task.name);
+  const [name, setName] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
   const [isChecked, setChecked] = useState(task.completed);
 
   const handleSave = async () => {
     try {
-      if (name.trim() === '') {
-        return Alert.alert('Error', 'Task name cannot be empty');
+      if (name.trim() === '' || description.trim() === '') {
+        return Alert.alert(
+          'Error',
+          'Task name and description cannot be empty',
+        );
       }
-      await updateTask('bc39b7db-d7b1-4cb2-be62-9758861c1861', isChecked, name);
+      await updateTask(task.id, isChecked, name, description);
       Alert.alert('Success', 'Task updated successfully');
       navigation?.goBack();
     } catch (error) {
@@ -49,32 +53,50 @@ export function EditTaskScreen({navigation, route}: Props) {
     <View style={styles.container}>
       <Header />
       <View style={styles.form}>
-        <Text style={styles.taskAdd}>Current task title: {task.name}</Text>
+        <Text style={styles.mainTitle}>Edit task {task.title}</Text>
       </View>
-      <TextInput
-        style={styles.smallLnput}
-        value={name}
-        onChangeText={setName}
-        placeholder="New Task Name"
-      />
-      <View style={styles.checkboxContainer}>
-        <Checkbox
-          style={styles.checkbox}
-          value={isChecked}
-          onValueChange={(value: any) => {
-            if (value) {
-              setChecked(true);
-            } else {
-              setChecked(false);
-            }
-          }}
-        />
-        <Text style={styles.taskAdd}>Task Completed</Text>
+      <View style={styles.form}>
+        <View style={styles.containerColBigger}>
+          <TextInput
+            style={styles.input}
+            placeholder="Task title"
+            keyboardAppearance="dark"
+            autoCapitalize="words"
+            keyboardType="default"
+            placeholderTextColor={'#808080'}
+            onChangeText={setName}
+            value={name}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Description"
+            keyboardAppearance="dark"
+            autoCapitalize="words"
+            keyboardType="default"
+            placeholderTextColor={'#808080'}
+            onChangeText={setDescription}
+            value={description}
+          />
+          <View style={styles.checkboxContainer}>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked}
+              onValueChange={(value: any) => {
+                if (value) {
+                  setChecked(true);
+                } else {
+                  setChecked(false);
+                }
+              }}
+            />
+            <Text style={styles.taskAdd}>Task Completed</Text>
+          </View>
+          <TouchableOpacity style={styles.button} onPress={handleSave}>
+            <Text style={styles.buttonText}>Update task</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.secondForm}>
-        <TouchableOpacity style={styles.button} onPress={handleSave}>
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation?.goBack()}>

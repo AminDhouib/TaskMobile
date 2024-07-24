@@ -9,10 +9,25 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
   },
+  containerCol: {
+    flexDirection: 'column',
+    width: '60%',
+    justifyContent: 'center',
+    paddingTop: 10,
+    marginTop: 5,
+    paddingBottom: 15,
+  },
   taskAdd: {
     color: '#FFFFFF',
     flex: 1,
     fontSize: 16,
+    marginLeft: 16,
+  },
+  description: {
+    color: '#808080',
+    flex: 1,
+    fontSize: 12,
+    marginTop: 4,
     marginLeft: 16,
   },
   taskDone: {
