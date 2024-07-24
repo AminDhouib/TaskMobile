@@ -90,6 +90,22 @@ namespace TaskApi.Controllers
             return NoContent();
         }
 
+        // DELETE: api/tasks/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTask(string id)
+        {
+            var taskItem = await _context.Tasks.FindAsync(id);
+            if (taskItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tasks.Remove(taskItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool TaskItemExists(string id)
         {
             return _context.Tasks.Any(e => e.Id == id);
