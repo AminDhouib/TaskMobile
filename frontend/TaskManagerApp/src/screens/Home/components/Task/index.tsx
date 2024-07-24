@@ -7,14 +7,14 @@ import Checkbox from 'expo-checkbox';
 import {TaskItem} from '../../index';
 
 type Props = {
-  name: TaskItem;
+  item: TaskItem;
   onRemove: () => void;
   onCheckPressed: (value: boolean) => void;
   onEdit: () => void;
 };
 
-export function Task({name, onRemove, onCheckPressed, onEdit}: Props) {
-  const [isChecked, setChecked] = useState(false);
+export function Task({item, onRemove, onCheckPressed, onEdit}: Props) {
+  const [isChecked, setChecked] = useState(item.completed);
   return (
     <>
       <View style={styles.container}>
@@ -32,9 +32,9 @@ export function Task({name, onRemove, onCheckPressed, onEdit}: Props) {
           }}
         />
         {isChecked ? (
-          <Text style={styles.taskDone}>{name.name}</Text>
+          <Text style={styles.taskDone}>{item.title}</Text>
         ) : (
-          <Text style={styles.taskAdd}>{name.name}</Text>
+          <Text style={styles.taskAdd}>{item.title}</Text>
         )}
         <View style={styles.actionButtonsContainer}>
           <TouchableOpacity style={styles.button} onPress={onEdit}>

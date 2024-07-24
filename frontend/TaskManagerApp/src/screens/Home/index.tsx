@@ -20,7 +20,7 @@ import {addTask, deleteTask, getTasks} from '../../services/api';
 
 export type TaskItem = {
   id: string;
-  name: string;
+  title: string;
   completed: boolean;
 };
 type RootStackParamList = {
@@ -50,7 +50,7 @@ export function Home({navigation}: Props) {
     getData();
   }, []);
   async function handleTaskAdd(): Promise<void> {
-    if (tasks.some(item => item.name === task)) {
+    if (tasks.some(item => item.title === task)) {
       return Alert.alert('Error', 'Task already exists');
     }
     if (task.trim() === '') {
@@ -59,7 +59,7 @@ export function Home({navigation}: Props) {
     }
     const taskObject: TaskItem = {
       id: '',
-      name: task,
+      title: task,
       completed: false,
     };
     const res = await addTask(taskObject);
@@ -75,7 +75,7 @@ export function Home({navigation}: Props) {
   function handleTaskRemove(item: TaskItem): void {
     Alert.alert(
       'Warning',
-      `Are you sure you want to remove the task ${item.name}?`,
+      `Are you sure you want to remove the task ${item.title}?`,
       [
         {
           text: 'No',
@@ -126,11 +126,11 @@ export function Home({navigation}: Props) {
 
       <FlatList
         data={tasks}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.title}
         renderItem={({item}) => (
           <Task
-            key={item.name}
-            name={item}
+            key={item.id}
+            item={item}
             onCheckPressed={value => handleTaskDoneCounter(value)}
             onEdit={() => handleOpenDetails(item)}
             onRemove={() => handleTaskRemove(item)}

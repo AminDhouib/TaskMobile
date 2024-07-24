@@ -28,7 +28,7 @@ export const getTaskById = async (id: string): Promise<TaskItem> => {
 export const updateTask = async (
   id: string,
   completed: boolean,
-  name: string,
+  title: string,
 ): Promise<TaskItem | null> => {
   try {
     console.log(`${API_URL}/Tasks/${id}`);
@@ -37,7 +37,7 @@ export const updateTask = async (
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({name, completed}),
+      body: JSON.stringify({title, completed}),
     });
     console.log(response.status);
     return response.json();
