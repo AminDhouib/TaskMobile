@@ -62,8 +62,6 @@ export function Home({navigation}: Props) {
       return Alert.alert('Error', 'Task already exists');
     }
     if (task.trim() === '' || description.trim() === '') {
-      setTask('');
-      setDescription('');
       return Alert.alert('Error', 'Task name and description cannot be empty');
     }
     const taskObject: TaskItem = {
