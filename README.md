@@ -14,4 +14,5 @@ A task manager mobile app that was built with React Native and C#. The user is c
 
 - [Frontend Instructions](frontend/README.md)
 
-[todo_app_recording](./todo_app_recording.mp4)
+https://github.com/user-attachments/assets/a1c092d6-17f8-46fa-b15c-49ff46939c63
+
