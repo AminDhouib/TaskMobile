@@ -16,7 +16,6 @@ type Props = {
 
 export function Task({ item, onRemove, onCheckPressed, onEdit }: Props) {
     const [isChecked, setChecked] = useState(item.completed)
-    console.log(item.title, isChecked)
     return (
         <>
             <View style={styles.container}>
