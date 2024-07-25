@@ -41,7 +41,7 @@ export function Home({ navigation }: Props) {
     const [taskDoneCounter, setTaskDoneCounter] = useState(0)
     const getData = async () => {
         const response = await getTasks()
-        setTasks(response)
+        setTasks(response.reverse())
         setTaskCounter(response.length)
         setTaskDoneCounter(response.filter(item => item.completed).length)
     }
@@ -51,6 +51,7 @@ export function Home({ navigation }: Props) {
 
     useFocusEffect(
         React.useCallback(() => {
+            setTasks([])
             getData()
         }, [])
     )
@@ -96,6 +97,9 @@ export function Home({ navigation }: Props) {
                         setTasks(prevState =>
                             prevState.filter(it => it.id !== item.id)
                         )
+                        if (item.completed) {
+                            setTaskDoneCounter(prevState => prevState - 1)
+                        }
                         setTaskCounter(prevState => prevState - 1)
                         deleteTask(item.id)
                     },
@@ -121,6 +125,7 @@ export function Home({ navigation }: Props) {
                         style={styles.input}
                         placeholder="Task title"
                         keyboardAppearance="dark"
+                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setTask}
@@ -130,6 +135,7 @@ export function Home({ navigation }: Props) {
                         style={styles.input}
                         placeholder="Description"
                         keyboardAppearance="dark"
+                        autoCapitalize="words"
                         keyboardType="default"
                         placeholderTextColor={'#808080'}
                         onChangeText={setDescription}

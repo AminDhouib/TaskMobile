@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './styles'
 
 import Checkbox from 'expo-checkbox'
-import { updateTaskStatus } from '../../../../services/api'
+import { updateTask } from '../../../../services/api'
 import { TaskItem } from '../../index'
 
 type Props = {
@@ -16,6 +16,7 @@ type Props = {
 
 export function Task({ item, onRemove, onCheckPressed, onEdit }: Props) {
     const [isChecked, setChecked] = useState(item.completed)
+    console.log(item.title, isChecked)
     return (
         <>
             <View style={styles.container}>
@@ -25,11 +26,21 @@ export function Task({ item, onRemove, onCheckPressed, onEdit }: Props) {
                     onValueChange={(value: any) => {
                         if (value) {
                             setChecked(true)
-                            updateTaskStatus(item.id, true)
+                            updateTask(
+                                item.id,
+                                true,
+                                item.title,
+                                item.description
+                            )
                             onCheckPressed(true)
                         } else {
                             setChecked(false)
-                            updateTaskStatus(item.id, false)
+                            updateTask(
+                                item.id,
+                                false,
+                                item.title,
+                                item.description
+                            )
                             onCheckPressed(false)
                         }
                     }}

@@ -42,20 +42,6 @@ export const updateTask = async (
     return response.status === 204
 }
 
-export const updateTaskStatus = async (
-    id: string,
-    completed: boolean
-): Promise<boolean> => {
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ completed }),
-    })
-    return response.status === 204
-}
-
 export const deleteTask = async (id: string): Promise<void> => {
     await fetch(`${API_URL}/Tasks/${id}`, {
         method: 'DELETE',
